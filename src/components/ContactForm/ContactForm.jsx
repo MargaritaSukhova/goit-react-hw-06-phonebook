@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
-import { Form, Label, Input, Btn } from '../ContactForm/ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contacts/contactsActions';
+import { Form, Label, Input, Btn } from '../ContactForm/ContactForm.styled';
 import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contactsSlice';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
@@ -23,15 +22,10 @@ const ContactForm = () => {
   const handleContactSave = e => {
     e.preventDefault();
 
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
     if (checkContacts(name)) {
       return alert(`${name} is already in contacts list!`);
     }
-    dispatch(addContact(contact));
+    dispatch(addContact(name, number));
     reset();
   };
 
